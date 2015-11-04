@@ -1,10 +1,13 @@
-var loadMessages;
+
 var userId;
 var dataID;
-
+var loadMessages;
 var page = {
-  usersUrl: "https://tiny-tiny.herokuapp.com/collections/hopper",
-  messagesUrl: "https://tiny-tiny.herokuapp.com/collections/hopper-messages",
+  userArr: [],
+  currUser: '',
+  usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
+  messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
+
   init: function(){
     page.stylesInIt();
     page.eventsInIt();
@@ -16,7 +19,7 @@ var page = {
     page.postMessage();
     page.postUser();
     page.postAuthor();
-    page.deleteUser();
+    page.deleteMessage();
   },
   stylesInIt: function(){
     page.getUsernames();
@@ -30,6 +33,7 @@ var page = {
             url: page.usersUrl,
             data: userData,
             success: function(data){
+              page.currUser = data._id;
               $('input[name="inputUser"]').val('');
             }
           });
@@ -78,6 +82,15 @@ var page = {
         }
       });
     });
+    // $('body').on('click', function(event){
+    //   event.preventDefault();
+    //   $.ajax({
+    //     url: page.usersUrl + '/' + userArr[0]._id,
+    //     method: 'DELETE',
+    //     success: function(data){
+    //     }
+    //   });
+    // });
   },
   getMessage: function(){
     $.ajax({
@@ -93,19 +106,43 @@ var page = {
         $('.messages').append(loadMessages);
       }
     });
-},
-  getUsernames: function(){
-    $.ajax({
-        method: "GET",
-        url: page.usersUrl,
-        success: function(data){
-          _.each(data, function(el){
-            $(".users").append(el.user+ "<br>");
-          });
-        },
-      });
+  },
+getUsernames: function(){
+  $.ajax({
+      method: "GET",
+      url: page.usersUrl,
+      success: function(data){
+        _.each(data, function(el){
+          page.userArr = data;
+          $(".users").append(el.user+ "<br>");
+        });
+      },
+    });
+  },
+deleteMessage: function(){
+   $('body').on('click','.delete',function(event){
+     event.preventDefault();
+   $(this).closest('li').remove();
+   $.ajax({
+     userId: '',
+     method: 'GET',
+     url: page.usersUrl,
+     success: function(data){
+     }
+   });
+ });
 },
 };
 $(document).ready(function(){
  page.init();
+ $(window).on('beforeunload', function(){
+   console.log("fuck");
+    $.ajax({
+      url: page.usersUrl + '/' + page.currUser,
+      method: 'DELETE',
+      async: false,
+      success: function(data){
+      }
+    });
+ });
 });
