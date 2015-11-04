@@ -9,7 +9,7 @@ var page = {
   },
   eventsInit: function(){
     $('.userForm').on('submit', function(event){
-          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          var userData = {user: $('input[name="inputUser"]').val(), color: ''};
           event.preventDefault();
           $.ajax({
             method:'POST',
