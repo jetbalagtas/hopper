@@ -2,6 +2,8 @@ body {
   color: white; }
 
 .container {
+  display: inline-block;
+  vertical-align: top;
   background-color: #F7840f;
   width: 100%;
   height: 580px;
@@ -22,11 +24,18 @@ aside {
   font-size: 1.5rem; }
 
 section {
-  position: relative;
-  display: inline-block;
-  width: 70%;
+  vertical-align: top;
+  width: 60%;
   height: 500px;
   margin: 0 auto; }
+
+.messages {
+  width: 70%;
+  display: inline-block;
+  vertical-align: top; }
+
+form.messageForm {
+  width: 100%; }
 
 input {
   color: white;

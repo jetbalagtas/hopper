@@ -7,7 +7,7 @@ var page = {
   init: function(){
     setInterval(function(){
       page.stylesInit();
-    }, 20);
+    }, 20000);
     page.eventsInit();
     page.getUsernames();
   },
