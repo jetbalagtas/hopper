@@ -64,7 +64,7 @@ var page = {
             console.log("SUCCESS",data);
           },
           failure: function(data){
-            console.log("FAILURE")
+            console.log("FAILURE");
           }
         });
       }
